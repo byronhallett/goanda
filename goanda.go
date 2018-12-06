@@ -33,6 +33,7 @@ type OandaConnection struct {
 }
 
 const OANDA_AGENT string = "v20-golang/0.0.1"
+const TIMEOUT time.Duration = time.Second * 20
 
 func NewConnection(accountID string, token string, live bool) *OandaConnection {
 	hostname := ""
@@ -72,7 +73,7 @@ func NewConnection(accountID string, token string, live bool) *OandaConnection {
 // TODO: include params as a second option
 func (c *OandaConnection) Request(endpoint string) []byte {
 	client := http.Client{
-		Timeout: time.Second * 5, // 5 sec timeout
+		Timeout: TIMEOUT,
 	}
 
 	url := createUrl(c.hostname, endpoint)
@@ -88,7 +89,7 @@ func (c *OandaConnection) Request(endpoint string) []byte {
 
 func (c *OandaConnection) Send(endpoint string, data []byte) []byte {
 	client := http.Client{
-		Timeout: time.Second * 5, // 5 sec timeout
+		Timeout: TIMEOUT,
 	}
 
 	url := createUrl(c.hostname, endpoint)
@@ -104,7 +105,7 @@ func (c *OandaConnection) Send(endpoint string, data []byte) []byte {
 
 func (c *OandaConnection) Update(endpoint string, data []byte) []byte {
 	client := http.Client{
-		Timeout: time.Second * 5,
+		Timeout: TIMEOUT,
 	}
 
 	url := createUrl(c.hostname, endpoint)

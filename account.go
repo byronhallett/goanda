@@ -96,21 +96,23 @@ type AccountSummary struct {
 	LastTransactionID string `json:"lastTransactionID"`
 }
 
+type Instrument struct {
+	DisplayName                 string `json:"displayName"`
+	DisplayPrecision            int    `json:"displayPrecision"`
+	MarginRate                  string `json:"marginRate"`
+	MaximumOrderUnits           string `json:"maximumOrderUnits"`
+	MaximumPositionSize         string `json:"maximumPositionSize"`
+	MaximumTrailingStopDistance string `json:"maximumTrailingStopDistance"`
+	MinimumTradeSize            string `json:"minimumTradeSize"`
+	MinimumTrailingStopDistance string `json:"minimumTrailingStopDistance"`
+	Name                        string `json:"name"`
+	PipLocation                 int    `json:"pipLocation"`
+	TradeUnitsPrecision         int    `json:"tradeUnitsPrecision"`
+	Type                        string `json:"type"`
+}
+
 type AccountInstruments struct {
-	Instruments []struct {
-		DisplayName                 string `json:"displayName"`
-		DisplayPrecision            int    `json:"displayPrecision"`
-		MarginRate                  string `json:"marginRate"`
-		MaximumOrderUnits           string `json:"maximumOrderUnits"`
-		MaximumPositionSize         string `json:"maximumPositionSize"`
-		MaximumTrailingStopDistance string `json:"maximumTrailingStopDistance"`
-		MinimumTradeSize            string `json:"minimumTradeSize"`
-		MinimumTrailingStopDistance string `json:"minimumTrailingStopDistance"`
-		Name                        string `json:"name"`
-		PipLocation                 int    `json:"pipLocation"`
-		TradeUnitsPrecision         int    `json:"tradeUnitsPrecision"`
-		Type                        string `json:"type"`
-	} `json:"instruments"`
+	Instruments []Instrument `json:"instruments"`
 }
 
 type AccountChanges struct {

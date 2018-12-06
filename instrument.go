@@ -6,44 +6,30 @@ import (
 	"time"
 )
 
-type Candle struct {
+type CandlePrices struct {
 	Open  float64 `json:"o,string"`
 	Close float64 `json:"c,string"`
 	Low   float64 `json:"l,string"`
 	High  float64 `json:"h,string"`
 }
 
-type Candles struct {
-	Complete bool      `json:"complete"`
-	Volume   int       `json:"volume"`
-	Time     time.Time `json:"time"`
-	Mid      Candle    `json:"mid"`
+type Candle struct {
+	Complete bool         `json:"complete"`
+	Volume   int          `json:"volume"`
+	Time     time.Time    `json:"time"`
+	Ask      CandlePrices `json:"ask,omitempty"`
+	Bid      CandlePrices `json:"bid,omitempty"`
+	Mid      CandlePrices `json:"mid,omitempty"`
 }
 
 type BidAskCandles struct {
-	Candles []struct {
-		Ask struct {
-			C float64 `json:"c,string"`
-			H float64 `json:"h,string"`
-			L float64 `json:"l,string"`
-			O float64 `json:"o,string"`
-		} `json:"ask"`
-		Bid struct {
-			C float64 `json:"c,string"`
-			H float64 `json:"h,string"`
-			L float64 `json:"l,string"`
-			O float64 `json:"o,string"`
-		} `json:"bid"`
-		Complete bool      `json:"complete"`
-		Time     time.Time `json:"time"`
-		Volume   int       `json:"volume"`
-	} `json:"candles"`
+	Candles []Candle `json:"candles"`
 }
 
 type InstrumentHistory struct {
-	Instrument  string    `json:"instrument"`
-	Granularity string    `json:"granularity"`
-	Candles     []Candles `json:"candles"`
+	Instrument  string   `json:"instrument"`
+	Granularity string   `json:"granularity"`
+	Candles     []Candle `json:"candles"`
 }
 
 type Bucket struct {
@@ -113,7 +99,7 @@ func (c *OandaConnection) GetCandles(instrument string, count string, granularit
 }
 
 func (c *OandaConnection) GetBidAskCandles(instrument string, count string, granularity string) BidAskCandles {
-	endpoint := "/instruments/" + instrument + "/candles?count=" + count + "&granularity=" + granularity + "&price=BA"
+	endpoint := "/instruments/" + instrument + "/candles?count=" + count + "&granularity=" + granularity + "&price=BAM"
 	candles := c.Request(endpoint)
 	data := BidAskCandles{}
 	unmarshalJson(candles, &data)
